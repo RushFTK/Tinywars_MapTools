@@ -7,7 +7,8 @@ class Config_Manager():
     def __init__(self):
         pass
 
-    def init_config(Config_Manager):
+    @staticmethod
+    def init_config():
         "在当前路径下创建一个包含必要参数的空白的cofing文件"
         initdata = {
             'last_path' : '',
@@ -17,7 +18,8 @@ class Config_Manager():
         else:
             return 1
 
-    def save_config(Config_Manager,config_data):
+    @staticmethod
+    def save_config(config_data):
         "将json字符串存储到文件中"
         try:
             with open('config.json','w') as f:
@@ -27,7 +29,8 @@ class Config_Manager():
             return 1
         return 0
 
-    def load_config(Config_Manager):
+    @staticmethod
+    def load_config():
         "从config.json中读取信息"
         try:
             with open('config.json', 'r') as f:
@@ -37,7 +40,8 @@ class Config_Manager():
             return None
         return data
 
-    def get_lastpath(Config_Manager):
+    @staticmethod
+    def get_lastpath():
         "从config.json中读取lastpath字段"
         data = Config_Manager.load_config()
         if (data == None):
@@ -45,16 +49,22 @@ class Config_Manager():
         else:
             return data['last_path']
 
-    def save_lastpath(Config_Manager,new_lastpath):
-        "在其他变量不变的情况下，更新lastpath字段"
+    @staticmethod
+    def save_lastpath(new_lastpath,force = False):
+        "在其他变量不变的情况下，更新lastpath字段，force=True时，没有config文件将会进行创建"
         data = Config_Manager.load_config()
         if (data == None):
-            return 1,"config.json不存在"
-        else:
-            data['last_path'] = new_lastpath
-            result = Config_Manager.save_config(data)
+            if (force == False):
+                return 1,"config.json不存在"
+            else:
+                Config_Manager.init_config()
+                data = Config_Manager.load_config()
+        data['last_path'] = new_lastpath
+        result = Config_Manager.save_config(data)
         return result
 
 
 if __name__ == "__main__":
+    Config_Manager.init_config()
+    Config_Manager.save_lastpath(os.path.dirname(os.path.realpath(__file__)))
     pass

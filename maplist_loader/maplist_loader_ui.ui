@@ -70,7 +70,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QListView" name="listView_activemaplist"/>
+     <widget class="QListWidget" name="listWidget_activemaplist"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
