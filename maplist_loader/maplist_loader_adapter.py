@@ -16,6 +16,7 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
         self.startindex = { '2p':   0, 'Fun 2p':   0,'3p':  0, '4p':    0,'random': 0,'test':0 }
         self.startindex_tag = ['2p','Fun 2p','3p','4p','random','test']
         self.startindex_key = ['-- 2p', '-- Fun 2p maps', '-- 3p', '-- 4p', '-- random maps', '-- test maps']
+        self.ui.comboBox_newitemtag.addItems(self.startindex_tag)
         self.ui.lineEdit_maplistrounte.setText(self.get_savedpath())
         #链接鼠标点击事件
         self.ui.pushButton_chooseroute.clicked.connect(self.event_selectroute)
@@ -52,11 +53,13 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
                         current_startindex_mark = current_startindex_mark + 1
                         print(self.startindex)
         self.update_listbox()
-        pass
+
+    def event_savelist(self):
+        "将修改好的文件列表转换并存储至原有WarFieldList中"
+        #TODO:增加原有前后行(｛｝)，并对每一个项目结尾增加/m
 
     def get_savedpath(self):
         "获取存储文件列表的目录，检测顺序：最后一次使用的->程序根目录设定的->文件路径控件上的文字"
-
         lastpath = Config_Manager.get_lastpath()
         if (lastpath != None):
             result_path = lastpath
