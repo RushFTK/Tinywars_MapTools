@@ -13,7 +13,9 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
         self.ui = ui.Ui_Dialog()
         self.ui.setupUi(self)
         self.map_list = []
-        self.startindex = { '2p':   0, 'Fun 2p':   0,'3p':  0, '4p':    0,'test':0 }
+        self.startindex = { '2p':   0, 'Fun 2p':   0,'3p':  0, '4p':    0,'random': 0,'test':0 }
+        self.startindex_tag = ['2p','Fun 2p','3p','4p','random','test']
+        self.startindex_key = ['-- 2p', '-- Fun 2p maps', '-- 3p', '-- 4p', '-- random maps', '-- test maps']
         self.ui.lineEdit_maplistrounte.setText(self.get_savedpath())
         #链接鼠标点击事件
         self.ui.pushButton_chooseroute.clicked.connect(self.event_selectroute)
@@ -34,7 +36,8 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
             self.ui.lineEdit_maplistrounte.setText(dir_path +  '\\' + self.relative_path)
 
     def event_loadlist(self):
-        #从文件中读取存储的地图列表，并显示在itemlist上
+        "从文件中读取存储的地图列表，并显示在itemlist上"
+        current_startindex_mark = 0
         path = self.ui.lineEdit_maplistrounte.text()
         with open(path + '\\WarFieldList.lua', 'r') as f:
             self.map_list = f.readlines()[1:-1]
@@ -42,7 +45,12 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
         for i in range(0,len(self.map_list)):
             if (self.map_list[i][-1:] == '\n'):
                 self.map_list[i] = self.map_list[i][:-1]
-                print(self.map_list[i])
+                #按顺序查找下一个关键词：current_startindex_mark 待查找的关键词序号 startindex_tag：序号所队形的关键词字典索引 startindex_key：序号所对应的关键词在地图列表中的位置
+                if (current_startindex_mark < len(self.startindex_key)):
+                    if (self.map_list[i].find(self.startindex_key[current_startindex_mark])!= -1):
+                        self.startindex[self.startindex_tag[current_startindex_mark]] = i
+                        current_startindex_mark = current_startindex_mark + 1
+                        print(self.startindex)
         self.update_listbox()
         pass
 
@@ -63,7 +71,6 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
     def update_listbox(self):
         "更新listbox"
         self.ui.listWidget_activemaplist.clear()
-        print(self.map_list)
         self.ui.listWidget_activemaplist.addItems(self.map_list)
         pass
 
