@@ -40,11 +40,13 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
             self.ui.lineEdit_maplistrounte.setText(dir_path +  '\\' + self.relative_path)
 
     def event_loadlist(self):
-        "从文件中读取存储的地图列表，并显示在itemlist上"
+        "从文件中读取存储的地图列表，备份，处理后显示在itemlist上"
         current_startindex_mark = 0
         path = self.ui.lineEdit_maplistrounte.text()
-        with open(path + '\\WarFieldList.lua', 'r') as f:
-            self.map_list = f.readlines()[1:-1]
+        with open(path + '\\WarFieldList.lua', 'r') as f1 , open(path + '\\WarFieldList.lua.bak','w') as f2:
+            original_file = f1.readlines()
+            f2.writelines(original_file)
+            self.map_list = original_file[1:-1]
         #删除分行后缀，寻找各种类地图标志
         for i in range(0,len(self.map_list)):
             if (self.map_list[i][-1:] == '\n'):
@@ -60,14 +62,21 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
 
     def event_savelist(self):
         "将修改好的文件列表转换并存储至原有WarFieldList中"
-        #TODO:增加原有前后行(｛｝)，并对每一个项目结尾增加/m
+        insert_list = self.map_list
+        for i in range(0,len(insert_list)):
+            insert_list[i] = insert_list[i] + '\n'
+        insert_list.insert(0,'return {\n')
+        insert_list.append('}\n')
+        path = self.last_success_loadpath
+        with open(path + '\\WarFieldList.lua', 'w') as f:
+            f.writelines(insert_list)
         pass
 
     def event_insertitem(self):
         "TODO:将合法的项插入刀MapList中"
 
     def event_deleteitem(self):
-        "将选中的项从列表中删除"
+        "TODO:将选中的项从列表中删除"
         pass
 
     def get_savedpath(self):
