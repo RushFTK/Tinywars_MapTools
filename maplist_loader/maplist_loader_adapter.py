@@ -13,6 +13,8 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
         self.ui = ui.Ui_Dialog()
         self.ui.setupUi(self)
         self.map_list = []
+        self.last_success_loadpath = ''
+        self.success_load = False
         self.startindex = { '2p':   0, 'Fun 2p':   0,'3p':  0, '4p':    0,'random': 0,'test':0 }
         self.startindex_tag = ['2p','Fun 2p','3p','4p','random','test']
         self.startindex_key = ['-- 2p', '-- Fun 2p maps', '-- 3p', '-- 4p', '-- random maps', '-- test maps']
@@ -21,10 +23,11 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
         #链接鼠标点击事件
         self.ui.pushButton_chooseroute.clicked.connect(self.event_selectroute)
         self.ui.pushButton_readlist.clicked.connect(self.event_loadlist)
+        self.ui.pushButton_savelist.clicked.connect(self.event_savelist)
 
     def closeEvent(self, QCloseEvent):
-        #TODO:当合法读取存在时才进行记录
-        Config_Manager.save_lastpath(self.ui.lineEdit_maplistrounte.text(),force=True)
+        if (self.success_load):
+            Config_Manager.save_lastpath(self.last_success_loadpath,force=True)
 
     def event_selectroute(self):
         #从文件夹列表选择路径，并更新之
@@ -51,12 +54,21 @@ class Maplistloader_Adapter(QtWidgets.QDialog):
                     if (self.map_list[i].find(self.startindex_key[current_startindex_mark])!= -1):
                         self.startindex[self.startindex_tag[current_startindex_mark]] = i
                         current_startindex_mark = current_startindex_mark + 1
-                        print(self.startindex)
         self.update_listbox()
+        self.success_load = True
+        self.last_success_loadpath = path
 
     def event_savelist(self):
         "将修改好的文件列表转换并存储至原有WarFieldList中"
         #TODO:增加原有前后行(｛｝)，并对每一个项目结尾增加/m
+        pass
+
+    def event_insertitem(self):
+        "TODO:将合法的项插入刀MapList中"
+
+    def event_deleteitem(self):
+        "将选中的项从列表中删除"
+        pass
 
     def get_savedpath(self):
         "获取存储文件列表的目录，检测顺序：最后一次使用的->程序根目录设定的->文件路径控件上的文字"

@@ -10,15 +10,21 @@
     <height>373</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>150</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MapListEditor</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>421</width>
+     <width>422</width>
      <height>351</height>
     </rect>
    </property>
@@ -84,7 +90,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox_newitemtag"/>
+         <widget class="QComboBox" name="comboBox_newitemtag">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_addnewmapitem">
