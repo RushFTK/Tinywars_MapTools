@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinywarsMapScriptEditor", "TinywarsMapScriptEditor\TinywarsMapScriptEditor.csproj", "{BFC58D3D-C00D-4947-98CD-3F559D74161F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFC58D3D-C00D-4947-98CD-3F559D74161F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC58D3D-C00D-4947-98CD-3F559D74161F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC58D3D-C00D-4947-98CD-3F559D74161F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC58D3D-C00D-4947-98CD-3F559D74161F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73C844BB-7306-4740-B28A-3E6471A4D736}
+	EndGlobalSection
+EndGlobal
